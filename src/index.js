@@ -1,17 +1,44 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React, { useState } from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+//import App from "./App";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+import AddCategory from "./components/AddCategory";
+import AddBill from "./components/AddBill";
+import NavBar from "./components/NavBar";
+import Chart from "./components/Chart";
+import BillsTable from "./components/BillsTable";
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+function App() {
+    const [shouldShowAddCategory, setShouldShowAddCategory] = useState(true);
+    const [categories, setCategories] = useState([]);
+
+    const addCategory = (category) => {
+        const updateCategories = [...(categories || []), category];
+        setCategories(updateCategories);
+        setShouldShowAddCategory(false);
+    };
+
+    return (
+        <div className="App">
+            {shouldShowAddCategory ? (
+                <AddCategory onSubmit={addCategory} />
+            ) : (
+                <div>
+                    <NavBar />
+                    <div className="container flex">
+                        <div className="w-1/2">
+                            <BillsTable />
+                        </div>
+                        <div className="w-1/2">
+                            <Chart />
+                        </div>
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+}
+
+const rootElement = document.getElementById("root");
+ReactDOM.render(<App />, rootElement);
