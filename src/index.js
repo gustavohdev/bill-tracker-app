@@ -26,6 +26,17 @@ function App() {
         setShouldShowAddCategory(true);
     };
 
+    const showAddBill = () => {
+        setShouldShowAddBill(true);
+    };
+
+    const removeBill = (index) => {
+        let updatedBills = [...bills];
+        updatedBills = updatedBills.slice(0, index).concat(updatedBills.slice(index + 1, updatedBills.length));
+        setBills(updatedBills);
+        localStorage.setItem("bills", JSON.stringify(updatedBills));
+    };
+
     const addBill = (amount, category, date) => {
         const bill = { amount, category, date };
         const updatedBills = [...(bills || []), bill];
@@ -54,6 +65,7 @@ function App() {
     }, []);*/
 
     useEffect(() => {
+        console.log("teste");
         const categoriesInLocalStorage = JSON.parse(localStorage.getItem("categories"));
         const billsInLocalStorage = JSON.parse(localStorage.getItem("bills"));
 
@@ -76,7 +88,7 @@ function App() {
                     <NavBar categories={categories} showAddCategory={showAddCategory} />
                     <div className="container flex">
                         <div className="w-1/2">
-                            <BillsTable />
+                            <BillsTable bills={bills} showAddBill={showAddBill} removeBill={removeBill} />
                         </div>
                         <div className="w-1/2">
                             <Chart />
