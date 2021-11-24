@@ -91,7 +91,7 @@ function App() {
                             <BillsTable bills={bills} showAddBill={showAddBill} removeBill={removeBill} />
                         </div>
                         <div className="w-1/2">
-                            <Chart />
+                            <Chart bills={bills} />
                         </div>
                     </div>
                 </div>
