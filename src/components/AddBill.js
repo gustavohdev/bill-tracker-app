@@ -36,7 +36,7 @@ const AddBill = (props) => {
                     <h1 className="text-grey-darkest">Enter a new bill</h1>
                     <p>E.g. 'Electricity' or 'Gas' or 'Internet'</p>
                     <div className="flex mt-4">
-                        <input className="shadow appearance-none border rounded w-full py-2 px-3 mr-4 text-grey-darker" placeholder="Add category" value={amount} onChange={handleChangeAmount} />
+                        <input className="shadow appearance-none border rounded w-full py-2 px-3 mr-4 text-grey-darker" placeholder="Add value" value={amount} onChange={handleChangeAmount} />
 
                         <select>
                             {props.categories

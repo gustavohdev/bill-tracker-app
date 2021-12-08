@@ -14,6 +14,11 @@ function App() {
     const [categories, setCategories] = useState([]);
     const [bills, setBills] = useState([]);
     const [shouldShowAddBill, setShouldShowAddBill] = useState(true);
+    const [activeCategory, setActiveCategory] = useState();
+
+    const activeBills = () => {
+        return bills.filter((bill) => (activeCategory ? bill.category === activeCategory : true)).sort((a, b) => (new Date(a.date) < new Date(b.date) ? 1 : -1));
+    };
 
     const addCategory = (category) => {
         const updateCategories = [...(categories || []), category];
@@ -43,6 +48,10 @@ function App() {
         setBills(updatedBills);
         setShouldShowAddBill(false);
         localStorage.setItem("bills", JSON.stringify(updatedBills));
+    };
+
+    const setNewActiveCategory = (index) => {
+        setActiveCategory(index);
     };
 
     /* useEffect(() => {
@@ -85,13 +94,13 @@ function App() {
                 <AddBill onSubmit={addBill} categories={categories} />
             ) : (
                 <div>
-                    <NavBar categories={categories} showAddCategory={showAddCategory} />
+                    <NavBar categories={categories} showAddCategory={showAddCategory} activeCategory={activeCategory} setNewActiveCategory={setNewActiveCategory} />
                     <div className="container flex">
                         <div className="w-1/2">
-                            <BillsTable bills={bills} showAddBill={showAddBill} removeBill={removeBill} />
+                            <BillsTable bills={activeBills()} showAddBill={showAddBill} removeBill={removeBill} />
                         </div>
                         <div className="w-1/2">
-                            <Chart bills={bills} />
+                            <Chart bills={activeBills()} />
                         </div>
                     </div>
                 </div>
